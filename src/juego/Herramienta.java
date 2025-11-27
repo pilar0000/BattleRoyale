@@ -2,7 +2,7 @@ package juego;
 
 // esta clase representa una herramienta del juego
 
-public class Herramienta implements Modificable {
+public abstract class Herramienta implements Modificable {
 	
 	protected String nombre;
 	protected int bonusAtaque;
@@ -21,16 +21,6 @@ public class Herramienta implements Modificable {
 	// devuelve el nombre de la herramienta
 	public String getNombre() {
 		return nombre;
-	}
-	
-	// como por defecto las herramientas no se pueden modificar, se utiliza sobreescritura para que las clases sobreescriban este comportamiento
-	public boolean comprobarModificacion() {
-		return false;
-	}
-	
-	// metodo vacio porque las subclases son quienes implementan la mejora
-	public void modifica() {
-		
 	}
 	
 	// metodo toString para representar en texto la herramienta

@@ -4,18 +4,18 @@ package juego;
 
 public class Espada extends Herramienta {
 	
-	// constructor creando una espada con bonus 10
+	// constructor creando una espada con bonus 5
 	public Espada() {
-		super("Espada", 10);
+		super("Espada", 5);
 	}
 	
-	// la probabilidad de que mejore es del 10%
+	// la probabilidad de que mejore es del 25%
 	public boolean comprobarModificacion() {
-		return Math.random() < 0.10;
+		return Math.random() < 0.25;
 	}
 	
-	// la mejora suma 2 puntos de ataque en el bonus
+	// la mejora suma 3 puntos de ataque en el bonus
 	public void modifica() {
-		bonusAtaque += 2;
+		bonusAtaque += 3;
 	}
 }
