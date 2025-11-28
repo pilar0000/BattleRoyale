@@ -4,18 +4,18 @@ package juego;
 
 public class Baculo extends Herramienta {
 	
-	// constructor que crea un baculo con bonus 5
+	// constructor que crea un baculo con bonus 3
 	public Baculo() {
-		super("Báculo", 5);
+		super("Báculo", 3);
 	}
 	
-	// el baculo se mejora con una probabilidad de 20%
+	// el baculo se mejora con una probabilidad de 40%
 	public boolean comprobarModificacion() {
-		return Math.random() < 0.2;
+		return Math.random() < 0.40;
 	}
 	
-	// la mejora aumenta 3 puntos de ataque
+	// la mejora aumenta 4 puntos de ataque
 	public void modifica() {
-		bonusAtaque += 3;
+		bonusAtaque += 4;
 	}
 }

@@ -4,18 +4,18 @@ package juego;
 
 public class Arco extends Herramienta {
 	
-	// constructor del arco, crea un arco con bonus 7
+	// constructor del arco, crea un arco con bonus 4
 	public Arco() {
-		super("Arco", 7);
+		super("Arco", 4);
 	}
 	
-	// la probabilidad de que mejore es del 15%
+	// la probabilidad de que mejore es del 30%
 	public boolean comprobarModificacion() {
-		return Math.random() < 0.15;
+		return Math.random() < 0.30;
 	}
 	
-	// suma un punto de ataque en el bonus
+	// suma 2 puntos de ataque en el bonus
 	public void modifica() {
-		bonusAtaque += 1;
+		bonusAtaque += 2;
 	}
 }
