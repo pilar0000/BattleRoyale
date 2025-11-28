@@ -1,123 +1,149 @@
-# Battle Royale - Proyecto final POO
+# BATTLE ROYALE - PROYECTO FINAL POO
 
-Proyecto final para la asignatura **Programación orientada a objetos** en Java.
+Proyecto final de programación orientada a objetos.
 
-El juego simula un todos contra todos entre jugadores que utilizan personajes, herramientas y habilidades especiales. Incluye herencia, polimorfismo, interfaces, ficheros y excepciones.
+# Descripción
 
-## Descripción del juego
+El jugador participa en un Battle Royale en un mapa que se va cerrando poco a poco. En la partida:
 
-Cada jugador participa en una partida donde:
+- El jugador elije su rol (Mago, Arquero o Guerrero)
+- El resto de combatientes son bots controlados por "IA"
+- Todos se mueven en el mapa, buscan pociones y luchan entre sí.
+- El personaje puede usar habilidades normales y especiales consumiendo maná.
+- El mapa contiene pociones de vida, pociones de maná y zonas seguras que se van reduciendo.
+- La partida finaliza cuando solo queda uno vivo.
 
-- Elige un personaje. (guerrero, mago o arquero)
-- Obtiene una herramienta. (espada, arco o báculo)
-- Usa habilidades especiales que consumen maná
-- Realiza ataques por turnos
-- La partida sigue hasta que queda un ganador
+**Objetivo**
 
-Los jugadores pueden ser humanos o bots con distintos niveles de dificultad y la partida va generando un log de acciones que puede volcarse a un fichero.
+- Sobrevivir hasta el final
+- O ser el bot ganador si el jugador muere
 
-## Personajes
+---
 
-##### 'Personaje' (abstracto)
-Clase base con:
-- vida
-- ataque base
-- defensa
-- maná
-- métodos comunes
-- método abstracto 'habilidadEspecial()'
+# Roles
 
-##### 'Guerrero'
-Aumenta su ataque temporalmente
+## Guerrero
 
-##### 'Mago'
-Usa maná para curarse o lanzar ataques especiales.
+- Vida: 100
+- Maná maximo: 20
+- Habilidad normal: correr, se mueve de 2 a 3 casillas.
+- Habilidad especial: ataque doble en un mismo turno.
 
-##### 'Arquero'
-Realiza disparos precisos
+## Arquero
 
-Incluye Override de:
-- toString()
-- equals()
-- compareTo()
+- Vida: 100
+- Maná maximo: 20
+- Habilidad normal: detección de enemigos
+- Habilidad especial: flecha paralizante que inmoviliza un turno.
 
-## Herramientas e interfaz modificable
+## Mago
 
-#### 'Herramienta'
-Clase base con:
-- nombre
-- bonusAtaque
+- Vida: 80
+- Maná maximo: 40
+- Habilidad normal: curación de +5
+- Habilidad especial: bola de veneno que causa daño durante tres turnos.
 
-#### Subclases:
-- Espada
-- Arco
-- Báculo
+Todas las habilidades cuestan 2 de maná. Las habilidades especiales cuestan 20 de maná, y este se regenera +1 por turno.
 
-## Interfaz
-Incluye:
+---
 
-- boolean comprobarModificacion();
-- void modifica();
+# Herramientas y mejoras
 
-Las herramientas pueden mejorar si se cumplen condiciones (vida, turnos, etc...)
+Clases disponibles:
 
-## Jugador
-Compuesto de:
-- un personaje
-- una herramienta
-- si es humano o bot
+- **Espada**
+- **Arco**
+- **Baculo**
 
-Métodos clave:
-- atacar(Jugador otro)
-- estaVivo()
-- toString()
+Cada herramienta tiene:
 
-## Partida
-Gestiona:
-- jugadores
-- dificultad
-- turnos
-- ataques
-- uso de habilidades
-- condiciones de victoria
+- Bonus de ataque
+- Mejora automatica si se cumplen ciertas condiciones 
 
-Incluye:
-- IA según dificultad
-- comprobación de recursos
-- integración con Logger
-- lanzamiento de excepciones
+---
 
-## Lectura y escritura de ficheros
-Incluye:
-- un sistema de log con las últimas 1000 acciones
-- volcado a fichero de resultados y estadísticas
-- gestión de errores mediante excepciones
+# Mapa y jugabilidad
 
-## Excepciones
-- RecursoInsuficienteException
-- FicheroLecturaException
-- FicheroEscrituraException
+El mapa contiene:
 
-Se lanza en situaciones como:
-- no hay suficientes personajes disponibles
-- no se puede crear o cargar el fichero
-- error al escribir log
+- Casillas libres
+- Paredes
+- Zonas seguras que se reducen
+- Items (pociones de vida y de maná)
+- Bots enemigos
 
-## Menú interactivo
-El usuario puede:
-- Iniciar partida
-- Ver personajes disponibles
-- Ver herramientas disponibles
-- Mostrar log
-- Guardar los resultados en fichero
-- Salir
+### Movimientos posibles:
 
-## IA del juego
-- Fácil: ataques aleatorios
-- Normal: ataca al jugador más débil
-- Difícil: usa habilidades y elige objetivos
+ARRIBA, ABAJO, IZQUIERDA, DERECHA
+ARRIBA_IZQ, ARRIBA_DER
+ABAJO_IZQ, ABAJO_DER
 
-## Como ejecutar el proyecto
-1. abrir en eclipse
-2. ejecutar main.java
-3. seguir las instrucciones del menú
+---
+
+# IA de los bots
+
+Hay tres niveles de dificultad
+
+### **Fácil**
+
+- Movimiento aleatorio
+- Ataques simples
+
+### **Normal**
+
+- Busca al enemigo más cercano
+- Se mueve hacia él
+
+### **Dificil**
+
+- Predice movimientos
+- Usa habilidades
+- Evita zonas peligrosas
+
+---
+
+# Arquitectura del proyecto
+
+Clases principales:
+
+- **Roll**: Clase abstracta tipo padre
+- **Guerrero, Arquero, Mago**: Heredan de Roll
+- **Herramienta** + **Espada, Arco, Báculo** 
+- **Jugador** (puede ser humano o bot)  
+- **Mapa** (gestión de zonas + items)  
+- **Partida** (ciclo del juego, turnos, IA, ganador)  
+- **Item** + Tipos de poción  
+- **Logger** (ultimas 1000 acciones)  
+- **GestorFicheros** (leer o guardar logs y configuración)  
+- **Excepciones**  
+- **Menu**  
+- **VentanaJuego** 
+- **Enums:** Dirección, TipoItem, Dificultad 
+
+---
+
+# Ficheros y Loggin
+
+El juego:
+
+- Guarda en fichero el log de acciones  
+- Lee la configuración 
+- Lanza excepciones si falla algo
+
+---
+
+# Como ejecutar el juego
+
+1. Abrir eclipse
+2. Importar el proyecto como existing java project
+3. compilar
+4. ejecutar Main.java
+5. seguir las instrucciones del menu
+
+---
+
+# Autores
+
+- Francisco Javier Gomes
+- Miguel Peñaranda
+- Pilar Escolar
