@@ -3,29 +3,47 @@ package juego;
 // posicion dentro del mapa
 
 public class Posicion {
-	
-	public int x;
-	public int y;
-	
-	public Posicion(int x, int y) {
-		this.x = x;
-		this.y = y;
-	}
-	
-	// comprobar si dos posiciones son igualess
-	@Override
-	public boolean equals(Object obj) {
-		
-		if(!(obj instanceof Posicion)) {
-			return false;
-		}
-		Posicion p = (Posicion) obj;
-		return this.x == p.x && this.y == p.y;
-	}
-	
-	// devolver la posicion
-	@Override
-	public String toString() {
-		return "(" + x + ", " + y + ")";
-	}
+    private int x;
+    private int y;
+    
+    // constructor
+    public Posicion(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getX() { 
+    	return x; 
+    }
+    public int getY() { 
+    	return y; 
+    }
+
+    // movimiento segun la direccion
+    public Posicion mover(Direccion d) {
+        switch (d) {
+            case ARRIBA:      
+            	return new Posicion(x, y - 1);
+            case ABAJO:       
+            	return new Posicion(x, y + 1);
+            case IZQUIERDA:   
+            	return new Posicion(x - 1, y);
+            case DERECHA:     
+            	return new Posicion(x + 1, y);
+            case ARRIBA_IZQ:  
+            	return new Posicion(x - 1, y - 1);
+            case ARRIBA_DER:  
+            	return new Posicion(x + 1, y - 1);
+            case ABAJO_IZQ:   
+            	return new Posicion(x - 1, y + 1);
+            case ABAJO_DER:   
+            	return new Posicion(x + 1, y + 1);
+        }
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "(" + x + "," + y + ")";
+    }
 }

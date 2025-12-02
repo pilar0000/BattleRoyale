@@ -1,80 +1,49 @@
 package juego;
 
-// representa a un jugador ya sea humano o bot
+// representa un jugador del juego
 
 public class Jugador {
 
     private String nombre;
-    private Roll personaje;  
-    private Herramienta arma;
+    private Roll personaje;
+    private Herramienta herramienta;
     private boolean esHumano;
-
-    // estados
-    private int venenoTurnos = 0;
-    private int paralizadoTurnos = 0;
-    private int manaBoostTurnos = 0;
-
-    public Jugador(String nombre, Roll personaje, Herramienta arma, boolean esHumano) {
+    
+    // constructor
+    public Jugador(String nombre, Roll personaje, Herramienta herramienta, boolean esHumano) {
         this.nombre = nombre;
         this.personaje = personaje;
-        this.arma = arma;
+        this.herramienta = herramienta;
         this.esHumano = esHumano;
+        this.personaje.setArma(herramienta);
     }
-
+    
+    // obtener su posicion
+    public Posicion getPos() {
+        return personaje.getPos();
+    }
+    
+    // mover al jugador
+    public void mover(Direccion dir) {
+        personaje.mover(dir);
+    }
+    
+    // ver si esta vivo
     public boolean estaVivo() {
         return personaje.estaVivo();
     }
 
-    public void aplicarEstados() {
-        // veneno
-        if (venenoTurnos > 0) {
-            personaje.recibirDanio(2);
-            venenoTurnos--;
-        }
-
-        // paralizado se reduce
-        if (paralizadoTurnos > 0) {
-            paralizadoTurnos--;
-        }
-
-        // boost de mana
-        if (manaBoostTurnos > 0) {
-            personaje.setMana(personaje.getManaMax());
-            manaBoostTurnos--;
-        }
-
-        // regen normal de mana
-        personaje.regenerarMana();
+    public void recibirAtaque(int d) {
+        personaje.recibirAtaque(d);
     }
 
-    public void atacar(Jugador objetivo) {
-        int daño = personaje.getAtaque() + arma.getBonusAtaque();
-        objetivo.personaje.recibirDanio(daño);
-    }
-
-    public boolean usarHabilidadNormal() {
-        return personaje.habilidadNormal(this);
-    }
-
-    public boolean usarHabilidadEspecial(Jugador objetivo) {
-        return personaje.habilidadEspecial(this, objetivo);
-    }
-
-    public Roll getPersonaje() {
-        return personaje;
-    }
-
-    public Herramienta getArma() {
-        return arma;
-    }
-
-    public boolean esHumano() {
-        return esHumano;
+    public void atacar(Jugador otro) {
+        int danio = personaje.atacar();
+        otro.recibirAtaque(danio);
     }
 
     @Override
     public String toString() {
-        return nombre + " - " + personaje.toString() +
-                " con " + arma.getNombre();
+        return nombre + " - " + personaje.toString();
     }
 }
