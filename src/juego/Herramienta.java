@@ -8,9 +8,9 @@ public abstract class Herramienta implements Modificable {
 	protected int bonusAtaque;
 	
 	// constructor
-	public Herramienta(String nombre, int bonus) {
+	public Herramienta(String nombre, int bonusAtaque) {
 		this.nombre = nombre;
-		this.bonusAtaque = bonus;
+		this.bonusAtaque = bonusAtaque;
 	}
 	
 	// devuelve el bonus de ataque de la herramienta
