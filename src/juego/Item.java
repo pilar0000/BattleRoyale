@@ -5,10 +5,20 @@ package juego;
 public class Item {
 
     private TipoItem tipo;
+    private Posicion pos;
     
     // constructor
-    public Item(TipoItem tipo) {
+    public Item(TipoItem tipo, Posicion pos) {
         this.tipo = tipo;
+        this.pos = pos;
+    }
+    
+    public Posicion getPos() {
+    	return pos;
+    }
+    
+    public void setPos(Posicion p) {
+    	this.pos = p;
     }
     
     //  ver si es pocion de vida o de mana
@@ -18,22 +28,20 @@ public class Item {
     
     // aplicar los efectos al jugador
     public void aplicar(Roll r) {
-
         switch (tipo) {
 
             case POCION_VIDA:
                 int nuevaVida = Math.min(r.getVidaMax(), r.getVida() + 20);
-         
-                while (r.getVida() < nuevaVida) {
-                    r.recibirAtaque(-1);
-                }
+                r.setVida(nuevaVida);
                 break;
 
             case POCION_MANA:
-                while (r.getMana() < r.getManaMax()) {
-                    r.mana += 1;
-                }
+                r.setMana(r.getManaMax());
                 break;
         }
+    }
+    @Override
+    public String toString() {
+        return "Item(" + tipo + ")";
     }
 }
