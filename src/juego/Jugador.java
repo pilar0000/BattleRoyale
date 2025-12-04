@@ -17,7 +17,11 @@ public class Jugador {
         this.esHumano = esHumano;
         this.personaje.setArma(herramienta);
     }
-    
+   
+    public String GetNombre()
+    {
+    	return nombre;
+    }
     // obtener su posicion
     public Posicion getPos() {
         return personaje.getPos();
