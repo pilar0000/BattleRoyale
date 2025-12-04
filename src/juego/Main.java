@@ -5,7 +5,9 @@ public class Main
 
 	public static void main(String[] args) 
 	{
-		// TODO Auto-generated method stub
+		Mapa mapa = new Mapa(75, 75);
+		
+	// TODO Auto-generated method stub
 		Roll a = new Arquero("Legolas");
 		System.out.println(a);
 			
@@ -30,6 +32,10 @@ public class Main
 	    System.out.println("vida de:" + m.nombre + " " + m.vida);
 	   	System.out.println("vida de :" + a.nombre + " " + a.vida);
 	    System.out.println("vida de:" + g.nombre + " " + g.vida);
+	    
+		System.out.println("-------------------- Mapa Pruebas ----------------------");
+	    mapa.mostrar();
+	
 	    	
 	}
 }
