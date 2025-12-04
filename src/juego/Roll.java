@@ -66,10 +66,10 @@ public abstract class Roll {
     }
 
     // habilidadNormal
-    public abstract void habilidadNormal(Roll objetivo);
+    public abstract void habilidadNormal();
 
     // habilidadEspecial
-    public abstract void habilidadEspecial(Roll objetivo);
+    public abstract void habilidadEspecial();
 
     // estaVivo
     public boolean estaVivo() {
