@@ -1,53 +1,72 @@
 package juego;
 
-// representa un jugador del juego
-
 public class Jugador {
 
-    private String nombre;
+    public String nombre;
     private Roll personaje;
-    private Herramienta herramienta;
+    private Herramienta arma;
     private boolean esHumano;
-    
-    // constructor
-    public Jugador(String nombre, Roll personaje, Herramienta herramienta, boolean esHumano) {
+
+    // --- COOLDOWN PARA CONTROLAR VELOCIDAD ---
+    private long ultimoMovimiento = 0;
+    private final long tiempoEntreMov = 150; // milisegundos (sube el número para hacerlo más lento)
+
+    public boolean puedeMover() {
+        long ahora = System.currentTimeMillis();
+        if (ahora - ultimoMovimiento >= tiempoEntreMov) {
+            ultimoMovimiento = ahora;
+            return true;
+        }
+        return false;
+    }
+
+    public Jugador(String nombre, Roll personaje, Herramienta arma, boolean esHumano) {
         this.nombre = nombre;
         this.personaje = personaje;
-        this.herramienta = herramienta;
+        this.arma = arma;
         this.esHumano = esHumano;
-        this.personaje.setArma(herramienta);
+
+        this.personaje.setArma(arma);
     }
-   
-    public String GetNombre()
-    {
-    	return nombre;
-    }
+
     // obtener su posicion
     public Posicion getPos() {
         return personaje.getPos();
     }
-    
-    // mover al jugador
-    public void mover(Direccion dir) {
-        personaje.mover(dir);
+
+    public void setPos(Posicion p) {
+        personaje.setPos(p);
     }
+
+    // ---------------- MOVIMIENTOS ----------------
+    public void moverArriba() {
+        personaje.mover(Direccion.ARRIBA);
+    }
+
+    public void moverAbajo() {
+        personaje.mover(Direccion.ABAJO);
+    }
+
+    public void moverIzquierda() {
+        personaje.mover(Direccion.IZQUIERDA);
+    }
+
+    public void moverDerecha() {
+        personaje.mover(Direccion.DERECHA);
+    }
+
     
-    // ver si esta vivo
+    // ----------------------------------------------
+
     public boolean estaVivo() {
         return personaje.estaVivo();
     }
 
-    public void recibirAtaque(int d) {
-        personaje.recibirAtaque(d);
-    }
-
-    public void atacar(Jugador otro) {
-        int danio = personaje.atacar();
-        otro.recibirAtaque(danio);
-    }
-
-    @Override
-    public String toString() {
-        return nombre + " - " + personaje.toString();
-    }
+    public String getNombre() { return nombre; }
+    public int getVida() { return personaje.getVida(); }
+    public int getMana() { return personaje.getMana(); }
+    public int getAtaque() { return personaje.getAtaque(); }
+    public Herramienta getArma() { return arma; }
+    public Roll getPersonaje() { return personaje; }
+    public boolean esHumano() { return esHumano; }
 }
