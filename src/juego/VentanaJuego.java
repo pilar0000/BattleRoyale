@@ -191,18 +191,18 @@ class PanelMapa extends JPanel {
         tilePiedra = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/Pasto2.png").getImage();
         
         // carcar sprites de pociones
-        spritePocionVida = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/PocionVida.png").getImage();
-        spritePocionMana = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/PocionMana.png").getImage();
+        spritePocionVida = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/PocionVida.jpg").getImage();
+        spritePocionMana = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/PocionMana.jpg").getImage();
         
         // cargar sprites del jugador 
-        spriteGuerreroDer = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/Guerr_der.png").getImage();
-        spriteGuerreroIzq = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/Guerr_izq.png").getImage();
+        spriteGuerreroDer = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/Guerr_der.jpg").getImage();
+        spriteGuerreroIzq = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/Guerr_izq.jpg").getImage();
 
-        spriteArqueroDer  = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/Arq_der.png").getImage();
-        spriteArqueroIzq  = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/Arq_izq.png").getImage();
+        spriteArqueroDer  = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/Arq_der.jpg").getImage();
+        spriteArqueroIzq  = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/Arq_izq.jpg").getImage();
 
-        spriteMagoDer     = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/Mago_der.png").getImage();
-        spriteMagoIzq     = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/Mago_izq.png").getImage();
+        spriteMagoDer     = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/Mago_der.jpg").getImage();
+        spriteMagoIzq     = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/Mago_izq.jpg").getImage();
 
 
         
