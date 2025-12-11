@@ -9,17 +9,17 @@ public class Guerrero extends Roll {
 	}
 
     @Override
-    public void habilidadNormal(Roll Guerrero)
+    public void habilidadNormal()
 	{
     	System.out.println(nombre + " Dashea hacia el frente");
 	}
 
     @Override
-    public void habilidadEspecial(Roll objetivo) 
+    public void habilidadEspecial() 
 	{
     	int danio = ataqueBase * 2;
-    	System.out.println(nombre + " El guerrero entra en un estado de Berserk y ataque dos veces a: " + objetivo.nombre);
-    	objetivo.recibirAtaque(danio);
+    	System.out.println(nombre + " El guerrero entra en un estado de Berserk y ataque dos veces a: " + nombre);
+    	//objetivo.recibirAtaque(danio);
     	System.out.println("-" + danio);
 	}
 }

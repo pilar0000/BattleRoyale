@@ -10,20 +10,20 @@ public class Mago extends Roll
 	}
     @Override
     	
-    public void habilidadNormal(Roll Mago)
+    public void habilidadNormal()
 	{
-  	  	int nuevaVida = Math.min(Mago.getVidaMax(), Mago.getVida() + 5);
+  	  	//int nuevaVida = Math.min(Mago.getVidaMax(), Mago.getVida() + 5);
       
         	System.out.println(nombre + " llama a los espiritus y se cura 5 puntos");
-        	System.out.println(nuevaVida);
+        	//System.out.println(nuevaVida);
 	}
 
     @Override
-    public void habilidadEspecial(Roll objetivo) 
+    public void habilidadEspecial() 
     	{
     		int danio = ataqueBase + 20;
-    		System.out.println(nombre + " canaliza un hechizo creando una bola de fuego y la lanza a: " + objetivo.nombre);
-    		objetivo.recibirAtaque(danio);
+    		System.out.println(nombre + " canaliza un hechizo creando una bola de fuego y la lanza a: " + nombre);
+    		//objetivo.recibirAtaque(danio);
     		System.out.println("-" + danio);
     	}
 }

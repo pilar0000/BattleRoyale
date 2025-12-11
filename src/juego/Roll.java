@@ -87,7 +87,7 @@ public abstract class Roll {
 
     public void recibirDanio(int dmg) {
         int real = dmg - defensa;
-        if (real < 0) real = 0;
+        if (real < 1) real = 1;
 
         vida -= real;
         if (vida < 0) vida = 0;
