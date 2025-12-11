@@ -9,7 +9,7 @@ public class Arquero extends Roll {
 		super(nombre, 100, 50, 20, 100); 
 	}
     @Override
-    public void habilidadNormal(Roll objetivo)
+    public void habilidadNormal()
     	{
   
         	System.out.println(nombre + " detecta la presencia de sus presas");
@@ -19,12 +19,12 @@ public class Arquero extends Roll {
     	}
 
     @Override
-    public void habilidadEspecial(Roll objetivo) 
+    public void habilidadEspecial() 
     	{
     		int danio = ataqueBase + 20;
-        	System.out.println(nombre + " la flecha se cubre de esencia electrica paralizando a: " + objetivo.nombre);
+        	System.out.println(nombre + " la flecha se cubre de esencia electrica paralizando a: " + nombre);
         	// public void recibirAtaque(int danio)
-        	objetivo.recibirAtaque(danio);
+        	//objetivo.recibirAtaque(danio);
         	System.out.println("-" + danio);
     	}
 }

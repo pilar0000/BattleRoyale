@@ -7,10 +7,10 @@ public class Jugador {
     private Herramienta arma;
     private boolean esHumano;
 
-    // --- COOLDOWN PARA CONTROLAR VELOCIDAD ---
+    // controlar velocidad
     private long ultimoMovimiento = 0;
-    private final long tiempoEntreMov = 150; // milisegundos (sube el número para hacerlo más lento)
-
+    private final long tiempoEntreMov = 150; 
+    
     public boolean puedeMover() {
         long ahora = System.currentTimeMillis();
         if (ahora - ultimoMovimiento >= tiempoEntreMov) {
@@ -38,7 +38,7 @@ public class Jugador {
         personaje.setPos(p);
     }
 
-    // ---------------- MOVIMIENTOS ----------------
+    // movimientos
     public void moverArriba() {
         personaje.mover(Direccion.ARRIBA);
     }
@@ -55,18 +55,33 @@ public class Jugador {
         personaje.mover(Direccion.DERECHA);
     }
 
-    
-    // ----------------------------------------------
-
     public boolean estaVivo() {
         return personaje.estaVivo();
     }
 
-    public String getNombre() { return nombre; }
-    public int getVida() { return personaje.getVida(); }
-    public int getMana() { return personaje.getMana(); }
-    public int getAtaque() { return personaje.getAtaque(); }
-    public Herramienta getArma() { return arma; }
-    public Roll getPersonaje() { return personaje; }
-    public boolean esHumano() { return esHumano; }
+    public String getNombre() { 
+    	return nombre; 
+    }
+    public int getVida() { 
+    	return personaje.getVida(); 
+    }
+    public int getMana() { 
+    	return personaje.getMana(); 
+    }
+    public int getAtaque() { 
+    	return personaje.getAtaque(); 
+    }
+    public Herramienta getArma() { 
+    	return arma; 
+    }
+    public Roll getPersonaje() { 
+    	return personaje; 
+    }
+    public boolean esHumano() { 
+    	return esHumano; 
+    }
+    public String getClase() {
+        return personaje.getClass().getSimpleName(); 
+    }
+
 }
