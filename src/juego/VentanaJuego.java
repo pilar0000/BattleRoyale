@@ -5,8 +5,9 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
 
-//ventana principal del juego
-
+//=====================================================
+//             VENTANA PRINCIPAL DEL JUEGO
+//=====================================================
 public class VentanaJuego extends JFrame {
 
     private PanelMapa panelMapa;
@@ -14,7 +15,6 @@ public class VentanaJuego extends JFrame {
 
     private Mapa mapa;
     private Jugador jugadorPrincipal;
-    
     private Partida partida;
 
     // velocidad del jugador
@@ -25,16 +25,17 @@ public class VentanaJuego extends JFrame {
 
         this.mapa = mapa;
         this.partida = partida;
+        // ignoramos el parámetro jugadorPrincipal y usamos el de la partida
         this.jugadorPrincipal = partida.getJugadorPrincipal();
-        
 
         setTitle("Battle Royale");
         setSize(900, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        panelMapa = new PanelMapa(mapa);
-        panelHUD = new PanelHUD(partida, jugadorPrincipal, this);
+        // IMPORTANTE: ahora le pasamos también el jugador al PanelMapa
+        panelMapa = new PanelMapa(mapa, this.jugadorPrincipal);
+        panelHUD = new PanelHUD(partida, this.jugadorPrincipal, this);
 
         add(panelMapa, BorderLayout.CENTER);
         add(panelHUD, BorderLayout.EAST);
@@ -68,7 +69,7 @@ public class VentanaJuego extends JFrame {
                                 Item it = mapa.recogerItem(p);
                                 it.aplicar(jugadorPrincipal.getPersonaje());
                                 System.out.println(jugadorPrincipal.getNombre() + " ha recogido " + it);
-                            }       
+                            }
                         }
                         break;
 
@@ -84,8 +85,6 @@ public class VentanaJuego extends JFrame {
                                 it.aplicar(jugadorPrincipal.getPersonaje());
                                 System.out.println(jugadorPrincipal.getNombre() + " ha recogido " + it);
                             }
-
-                           
                         }
                         break;
 
@@ -100,7 +99,6 @@ public class VentanaJuego extends JFrame {
                                 it.aplicar(jugadorPrincipal.getPersonaje());
                                 System.out.println(jugadorPrincipal.getNombre() + " ha recogido " + it);
                             }
-
                         }
                         break;
 
@@ -115,7 +113,6 @@ public class VentanaJuego extends JFrame {
                                 it.aplicar(jugadorPrincipal.getPersonaje());
                                 System.out.println(jugadorPrincipal.getNombre() + " ha recogido " + it);
                             }
-
                         }
                         break;
                 }
@@ -128,14 +125,9 @@ public class VentanaJuego extends JFrame {
         requestFocusInWindow();
 
         setVisible(true);
-        
-        // chatgpt:
-        // garantiza que se inicialice la ventana, la camara y los jugadores
-        SwingUtilities.invokeLater(() -> {
-            refrescar();
-        });
 
-       
+        // garantiza que se inicialice la ventana, la camara y los jugadores
+        SwingUtilities.invokeLater(this::refrescar);
     }
 
     // actualizar
@@ -148,7 +140,9 @@ public class VentanaJuego extends JFrame {
 
 
 
-// panel con camara y tiles
+//=====================================================
+//            PANEL MAPA (CÁMARA + TILES + SPRITES)
+//=====================================================
 class PanelMapa extends JPanel {
 
     private Mapa mapa;
@@ -162,10 +156,13 @@ class PanelMapa extends JPanel {
     private final int vistaAncho = 12;
     private final int vistaAlto = 12;
 
+    // referencia al jugador principal
+    private Jugador jugadorPrincipal;
+
     // tiles del mapa
     private Image tilePasto;
     private Image tilePiedra;
-    
+
     // sprites de pociones
     private Image spritePocionVida;
     private Image spritePocionMana;
@@ -181,36 +178,47 @@ class PanelMapa extends JPanel {
     private Image spriteMagoDer;
     private Image spriteMagoIzq;
 
-
-
-    public PanelMapa(Mapa mapa) {
+    public PanelMapa(Mapa mapa, Jugador jugadorPrincipal) {
         this.mapa = mapa;
+        this.jugadorPrincipal = jugadorPrincipal;
 
         // cargar tiles individuales
-        tilePasto = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/Pasto1.png").getImage();
-        tilePiedra = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/Pasto2.png").getImage();
-        
-        // carcar sprites de pociones
-        spritePocionVida = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/PocionVida.jpg").getImage();
-        spritePocionMana = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/PocionMana.jpg").getImage();
-        
+        tilePasto = new ImageIcon("C:/Users/ppan5/git/BattleRoyale/src/juego/Sprites/Pasto1.png").getImage();
+        tilePiedra = new ImageIcon("C:/Users/ppan5/git/BattleRoyale/src/juego/Sprites/Pasto2.png").getImage();
+
+        // cargar sprites de pociones
+        spritePocionVida = new ImageIcon("C:/Users/ppan5/git/BattleRoyale/src/juego/Sprites/PocionVida.png").getImage();
+        spritePocionMana = new ImageIcon("C:/Users/ppan5/git/BattleRoyale/src/juego/Sprites/PocionMana.png").getImage();
+
         // cargar sprites del jugador 
-        spriteGuerreroDer = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/Guerr_der.jpg").getImage();
-        spriteGuerreroIzq = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/Guerr_izq.jpg").getImage();
+        spriteGuerreroDer = new ImageIcon("C:/Users/ppan5/git/BattleRoyale/src/juego/Sprites/Guer_der.png").getImage();
+        spriteGuerreroIzq = new ImageIcon("C:/Users/ppan5/git/BattleRoyale/src/juego/Sprites/Guer_izq.png").getImage();
 
-        spriteArqueroDer  = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/Arq_der.jpg").getImage();
-        spriteArqueroIzq  = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/Arq_izq.jpg").getImage();
+        spriteArqueroDer  = new ImageIcon("C:/Users/ppan5/git/BattleRoyale/src/juego/Sprites/Arq_der.png").getImage();
+        spriteArqueroIzq  = new ImageIcon("C:/Users/ppan5/git/BattleRoyale/src/juego/Sprites/Arq_izq.png").getImage();
 
-        spriteMagoDer     = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/Mago_der.jpg").getImage();
-        spriteMagoIzq     = new ImageIcon("C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/Mago_izq.jpg").getImage();
+        spriteMagoDer     = new ImageIcon("C:/Users/ppan5/git/BattleRoyale/src/juego/Sprites/Mago_der.png").getImage();
+        spriteMagoIzq     = new ImageIcon("C:/Users/ppan5/git/BattleRoyale/src/juego/Sprites/Mago_izq.png").getImage();
 
-
-        
         setPreferredSize(new Dimension(
                 vistaAncho * cellSize,
                 vistaAlto * cellSize
         ));
-        spriteJugadorActual = spriteMagoDer;
+
+        // sprite inicial según clase del jugador principal
+        String clase = jugadorPrincipal.getClase();
+        switch (clase) {
+            case "Guerrero":
+                spriteJugadorActual = spriteGuerreroDer;
+                break;
+            case "Arquero":
+                spriteJugadorActual = spriteArqueroDer;
+                break;
+            case "Mago":
+            default:
+                spriteJugadorActual = spriteMagoDer;
+                break;
+        }
     }
 
     // actualizar sprite segun dirección
@@ -219,29 +227,28 @@ class PanelMapa extends JPanel {
         switch (jugador.getClase()) {
 
             case "Guerrero":
-                if (dir.equals("IZQUIERDA")) 
-                	spriteJugadorActual = spriteGuerreroIzq;
-                else 
+                if (dir.equals("IZQUIERDA"))
+                    spriteJugadorActual = spriteGuerreroIzq;
+                else
                     spriteJugadorActual = spriteGuerreroDer;
                 break;
 
             case "Arquero":
-                if (dir.equals("IZQUIERDA")) 
-                	spriteJugadorActual = spriteArqueroIzq;
-                else 
-                	spriteJugadorActual = spriteArqueroDer;
+                if (dir.equals("IZQUIERDA"))
+                    spriteJugadorActual = spriteArqueroIzq;
+                else
+                    spriteJugadorActual = spriteArqueroDer;
                 break;
 
             case "Mago":
             default:
-                if (dir.equals("IZQUIERDA")) 
-                	spriteJugadorActual = spriteMagoIzq;
-                else 
-                	spriteJugadorActual = spriteMagoDer;
+                if (dir.equals("IZQUIERDA"))
+                    spriteJugadorActual = spriteMagoIzq;
+                else
+                    spriteJugadorActual = spriteMagoDer;
                 break;
         }
     }
-
 
     // actualizar camara
     public void actualizarCamara(Jugador jugador) {
@@ -258,7 +265,7 @@ class PanelMapa extends JPanel {
         if (camY > mapa.getAlto() - vistaAlto)
             camY = mapa.getAlto() - vistaAlto;
     }
-    
+
     private void dibujarZonaSegura(Graphics g) {
 
         // obtener limites de la zona segura desde el mapa
@@ -317,13 +324,13 @@ class PanelMapa extends JPanel {
         for (int x = 0; x <= vistaAncho; x++)
             g.drawLine(x * cellSize, 0, x * cellSize, vistaAlto * cellSize);
 
-        for (int y = 0; y <= vistaAlto; y++) {
-        	g.drawLine(0, y * cellSize, vistaAncho * cellSize, y * cellSize);
-        }
+        for (int y = 0; y <= vistaAlto; y++)
+            g.drawLine(0, y * cellSize, vistaAncho * cellSize, y * cellSize);
+
         dibujarZonaSegura(g);
         dibujarItems(g);
     }
-    
+
     // dibujar items
     private void dibujarItems(Graphics g) {
 
@@ -348,7 +355,6 @@ class PanelMapa extends JPanel {
         }
     }
 
-
     private void dibujarJugador(Graphics g, Jugador j, int px, int py) {
         int dx = (px - camX) * cellSize;
         int dy = (py - camY) * cellSize;
@@ -360,24 +366,25 @@ class PanelMapa extends JPanel {
             // para bots usamos sprite base (mirando derecha)
             switch(j.getClase()) {
                 case "Guerrero": 
-                	g.drawImage(spriteGuerreroDer, dx, dy, cellSize, cellSize, null); 
-                	break;
+                    g.drawImage(spriteGuerreroDer, dx, dy, cellSize, cellSize, null); 
+                    break;
                 case "Arquero":  
-                	g.drawImage(spriteArqueroDer, dx, dy, cellSize, cellSize, null); 
-                	break;
+                    g.drawImage(spriteArqueroDer, dx, dy, cellSize, cellSize, null); 
+                    break;
                 case "Mago":     
                 default:         
-                	g.drawImage(spriteMagoDer, dx, dy, cellSize, cellSize, null); 
-                	break;
+                    g.drawImage(spriteMagoDer, dx, dy, cellSize, cellSize, null); 
+                    break;
             }
         }
     }
-
 }
 
 
 
-// panel hud
+//=====================================================
+//                      PANEL HUD
+//=====================================================
 class PanelHUD extends JPanel {
 
     private JLabel lblVida;
