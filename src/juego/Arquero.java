@@ -1,30 +1,24 @@
 package juego;
 
+// clase arquero
+// representa una clase jugable
+// hereda de la clase abstracta Roll, que contiene la logica de los personajes
 
 public class Arquero extends Roll {
 	
-	//String nombre, int vidaMax, int ataqueBase, int defensa, int manaMax
-	public Arquero(String nombre)
-	{
-		super(nombre, 100, 50, 20, 100); 
-	}
+	// constructor
+    public Arquero(String nombre) {
+        super(nombre, 100, 50, 20, 100);
+    }
+    
+    // habilidades
     @Override
-    public void habilidadNormal()
-    	{
-  
-        	System.out.println(nombre + " detecta la presencia de sus presas");
-        	
-       //     public void recibirAtaque(int danio)
- 
-    	}
+    public void habilidadNormal() {
+        System.out.println(nombre + " dispara una flecha rápida.");
+    }
 
     @Override
-    public void habilidadEspecial() 
-    	{
-    		int danio = ataqueBase + 20;
-        	System.out.println(nombre + " la flecha se cubre de esencia electrica paralizando a: " + nombre);
-        	// public void recibirAtaque(int danio)
-        	//objetivo.recibirAtaque(danio);
-        	System.out.println("-" + danio);
-    	}
+    public void habilidadEspecial() {
+        System.out.println(nombre + " prepara una flecha eléctrica que paraliza al enemigo.");
+    }
 }

@@ -2,8 +2,6 @@ package juego;
 
 // la espada tiene un bonus inicial alto y mejora con poca probabilidad
 
-// PUSH PRUEBA
-
 public class Espada extends Herramienta {
 	
 	// constructor creando una espada con bonus 5

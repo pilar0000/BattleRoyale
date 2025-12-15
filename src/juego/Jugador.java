@@ -1,5 +1,7 @@
 package juego;
 
+// contiene al personaje de roll y a su arma.
+
 public class Jugador {
 
     public String nombre;
@@ -9,8 +11,9 @@ public class Jugador {
 
     // controlar velocidad
     private long ultimoMovimiento = 0;
-    private final long tiempoEntreMov = 150; 
+    private final long tiempoEntreMov = 150;
     
+    // devuelve true si han pasado al menos 150 ms desde el ultimo movimiento
     public boolean puedeMover() {
         long ahora = System.currentTimeMillis();
         if (ahora - ultimoMovimiento >= tiempoEntreMov) {
@@ -19,7 +22,8 @@ public class Jugador {
         }
         return false;
     }
-
+    
+     // constructor
     public Jugador(String nombre, Roll personaje, Herramienta arma, boolean esHumano) {
         this.nombre = nombre;
         this.personaje = personaje;

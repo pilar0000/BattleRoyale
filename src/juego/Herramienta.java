@@ -1,6 +1,6 @@
 package juego;
 
-// esta clase representa una herramienta del juego
+// esta clase representa una herramienta del juego de forma abstracta
 
 public abstract class Herramienta implements Modificable {
 	

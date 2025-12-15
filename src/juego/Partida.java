@@ -1,16 +1,20 @@
 package juego;
 
+import javax.swing.JOptionPane;
 import java.util.ArrayList;
 import java.util.Random;
+
+// esta clase simula la partida
 
 public class Partida {
 
     private ArrayList<Jugador> jugadores;
     private Mapa mapa;
     private Dificultad dificultad;
-    private int turnos;
+    public int turnos = 0;
     private Logger logger;
-
+    
+    // genera numeros aleatorios para posiciones iniciales y objetos
     private Random rnd = new Random();
 
     // constructor
@@ -30,6 +34,7 @@ public class Partida {
     public void inicializar() {
         logger.add("Iniciando partida...");
         
+        // al principio todo el mapa es zona segura
         mapa.inicializarZonaSegura();
 
         // poner a los jugadores en posiciones aleatorias
@@ -58,6 +63,13 @@ public class Partida {
     // turno del jugador
     public void turnoJugador(Jugador j) {
         if (!j.estaVivo()) return;
+        
+     // intentar mejorar el arma
+        Herramienta arma = j.getArma();
+        if (arma.comprobarModificacion()) {
+            arma.modifica();
+            System.out.println("¡¡" + j.getNombre() + " ha mejorado su arma!! Ahora tiene +" + arma.getBonusAtaque() + " ATK");
+        }
 
         logger.add("Turno de jugador humano: " + j.getNombre());
         System.out.println("Turno de jugador humano: " + j.getNombre());
@@ -74,66 +86,81 @@ public class Partida {
         }
     }
     
+    // gestiona un turno entero y comprueba si el jugador humano ya esta muerto
     public void turnoCompletoJugador(Jugador jugador) {
-    	turnoJugador(jugador);
-    	turnoBots();
-    	comprobarMuertes();
-    	
-    	if(turnos %5 == 0) {
-    		cerrarZona();
+    
+    	// si el jugador muere, se acaba la partida
+    	if (!jugador.estaVivo()) {
+    	    JOptionPane.showMessageDialog(null, "Has muerto. Fin de la partida.", "GAME OVER", JOptionPane.INFORMATION_MESSAGE);
+    	    System.exit(0);
     	}
-    	turnos ++;
+
+    	
+        turnoJugador(jugador);
+        turnoBots();
+        comprobarMuertes();
+        
+        turnos++;
+        
+        if (turnos % 5 == 0) {
+            cerrarZona();
+        }
+
+        if (jugadoresVivos() <= 1) {
+            Jugador ganador = getGanador();
+
+            JOptionPane.showMessageDialog(null,"GANADOR: " + (ganador != null ? ganador.getNombre() : "Nadie"),"FIN DE PARTIDA",JOptionPane.INFORMATION_MESSAGE);
+
+            System.exit(0);
+        }
     }
 
+
     // turno de los bots
+    // eligen el objetivo segun la dificultad, atacan y se mueven aleatoriamente
+    // tambien comprueban si alguien muere
     public void turnoBots() {
+    	
+    	if (jugadoresVivos() <= 1) return;
 
         for (Jugador j : jugadores) {
+        	
+        	
 
             if (j.esHumano()) continue;
             if (!j.estaVivo()) continue;
 
-            logger.add("Turno del bot: " + j.getNombre());
-            System.out.println("Turno del bot: " + j.getNombre());
-
-            // seleccion de dificultad
             Jugador objetivo = null;
 
             switch (dificultad) {
-
                 case FACIL:
                     objetivo = IA.objetivoFacil(this, j);
                     break;
-
                 case NORMAL:
                     objetivo = IA.objetivoNormal(this, j);
                     break;
-
                 case DIFICIL:
                     objetivo = IA.objetivoDificil(this, j);
                     break;
             }
 
-            if (objetivo == null) continue;
+            if (objetivo == null || !objetivo.estaVivo()) continue;
 
-            // ataque de bot
             int dmg = j.getAtaque();
             objetivo.getPersonaje().recibirDanio(dmg);
-
-            String mensaje = "[IA-" + dificultad + "] " + j.getNombre() + " ha atacado a " + objetivo.getNombre() + " por " + dmg;
-
-            logger.add(mensaje);
-            System.out.println(mensaje);
             
-            // para que los bots no se suiciden saliendo de la zona segura
-            if (Math.random() < 0.5) {
-            	IA.moverBotAleatorio(j, mapa);
-            }
+            if (jugadoresVivos() <= 1) return;
+
+
+            System.out.println("[BOT] " + j.getNombre() + " ataca a " + objetivo.getNombre() + " por -" + dmg);
+
+            IA.moverBotAleatorio(j, mapa);
         }
     }
 
-    // buscar primer enemigo
-    private Jugador buscarPrimerEnemigo(Jugador atacante) {
+
+    // buscar primer enemigo que no sea el atacante
+    public Jugador buscarPrimerEnemigo(Jugador atacante) {
         for (Jugador j : jugadores) {
             if (j != atacante && j.estaVivo()) {
                 return j;
@@ -144,22 +171,22 @@ public class Partida {
 
     // comprobar muertes
     public void comprobarMuertes() {
-
-    	ArrayList<Jugador> eliminar = new ArrayList<>();
+    	
+    	ArrayList<Jugador> muertos = new ArrayList<>();
 
         for (Jugador j : jugadores) {
 
-            if (!j.estaVivo()) {
-                logger.add(j.getNombre() + " HA MUERTO.");
+            if (!j.estaVivo()) {              
                 System.out.println(j.getNombre() + " ha muerto.");
-                eliminar.add(j);
+                logger.add(j.getNombre() + " ha muerto.");
+                muertos.add(j);
             }
         }
-
-        jugadores.removeAll(eliminar);
+        mapa.getJugadores().removeAll(muertos);
+        jugadores.removeAll(muertos);    
     }
 
-    // zona segura
+    // zona segura que se cierra cada 5 turnos
     public void cerrarZona() {
         logger.add("La zona segura se está cerrando...");
 
@@ -170,6 +197,8 @@ public class Partida {
         	if(!j.estaVivo()) {
         		continue;
         	}
+        	
+        	// si no esta dentro de la zona segura, -15 de vida
             if (!mapa.dentroZonaSegura(j.getPos())) {
                 int dmg = 15;
                 j.getPersonaje().recibirDanio(dmg);
@@ -196,7 +225,7 @@ public class Partida {
         return null;
     }
 
-    // jugar
+    // jugar (no lo usamos en la gui pero sirve para la consola)
     public void jugar() {
     	// colocar a los jugadores
         inicializar(); 
@@ -232,7 +261,7 @@ public class Partida {
             System.out.println("No hubo ganador.");
         }
         try {
-            GestorFicheros.guardarLog("log_partida.txt", logger);
+            GestorFicheros.guardarLog("C:/Users/pilar/git/BattleRoyale/src/juego/log_partida.txt", logger);
             System.out.println("Log guardado correctamente.");
         } catch (FicheroEscrituraExcepcion e) {
             System.out.println(e.getMessage());
@@ -241,7 +270,7 @@ public class Partida {
     }
 
     // contar jugadores vivos
-    private int jugadoresVivos() {
+    public int jugadoresVivos() {
         int vivos = 0;
         for (Jugador j : jugadores)
             if (j.estaVivo()) {

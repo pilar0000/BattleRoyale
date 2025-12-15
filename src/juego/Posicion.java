@@ -1,6 +1,7 @@
 package juego;
 
 // posicion dentro del mapa
+// donde esta cada jugador y cada objeto
 
 public class Posicion {
     private int x;
@@ -11,7 +12,8 @@ public class Posicion {
         this.x = x;
         this.y = y;
     }
-
+    
+    // getters
     public int getX() { 
     	return x; 
     }

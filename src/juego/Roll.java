@@ -1,5 +1,8 @@
 package juego;
 
+// es la clase de la que heredan mago, arquero y guerrero
+// define como es un personaje y que puede hacer
+
 public abstract class Roll {
 
     protected String nombre;
@@ -73,18 +76,19 @@ public abstract class Roll {
     }
 
     public void setVida(int nueva) {
-        vida = Math.max(0, Math.min(nueva, vidaMax));
+        vida = Math.max(0, Math.min(nueva, 100));
     }
 
     public void setMana(int nueva) {
         mana = Math.max(0, Math.min(nueva, manaMax));
     }
 
-    // acciones
+    // mover al personaje
     public void mover(Direccion d) {
         this.pos = pos.mover(d);
     }
-
+    
+    // recibir daño
     public void recibirDanio(int dmg) {
         int real = dmg - defensa;
         if (real < 1) real = 1;
@@ -92,7 +96,8 @@ public abstract class Roll {
         vida -= real;
         if (vida < 0) vida = 0;
     }
-
+    
+    // comprobar si esta vivo
     public boolean estaVivo() {
         return vida > 0;
     }

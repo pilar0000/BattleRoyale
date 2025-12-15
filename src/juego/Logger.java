@@ -1,6 +1,7 @@
 package juego;
 
 // clase logger
+// guarda un log de todo lo que pasa en la partida
 
 import java.io.PrintWriter;
 

@@ -2,6 +2,8 @@ package juego;
 
 import java.util.ArrayList;
 
+// representa al mapa del juego, donde ocurre la partida
+
 public class Mapa {
 
     private int ancho;
@@ -30,13 +32,14 @@ public class Mapa {
         if (zonaXMax > zonaXMin) zonaXMax--;
         if (zonaYMax > zonaYMin) zonaYMax--;
     }
-
+    
+    // elementos del mapa
     private Item[][] celdas;
     private ArrayList<Jugador> jugadores;
 
-    // items
     private ArrayList<Item> items;
-
+    
+    // constructor
     public Mapa(int ancho, int alto) {
         this.ancho = ancho;
         this.alto = alto;
@@ -90,11 +93,13 @@ public class Mapa {
         Posicion p = item.getPos();
         celdas[p.getX()][p.getY()] = item;
     }
-
+    
+    // ver si hay un item
     public boolean hayItem(Posicion p) {
         return celdas[p.getX()][p.getY()] != null;
     }
-
+    
+    // recoger un item
     public Item recogerItem(Posicion p) {
         Item it = celdas[p.getX()][p.getY()];
         celdas[p.getX()][p.getY()] = null;
@@ -104,7 +109,8 @@ public class Mapa {
 
         return it;
     }
-
+    
+    // colocar un item
     public void colocarItem(Posicion p, Item it) {
         celdas[p.getX()][p.getY()] = it;
 
@@ -112,11 +118,8 @@ public class Mapa {
             items.add(it);
     }
 
-    // jugadores
+    // colocar jugadores
     public void colocarJugador(Jugador j, Posicion p) {
-
-        // Tu línea original movía ARRIBA por error, la removo:
-        // j.getPos().mover(Direccion.ARRIBA);
 
         j.setPos(p);
         jugadores.add(j);

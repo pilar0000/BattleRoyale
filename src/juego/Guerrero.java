@@ -1,25 +1,23 @@
 package juego;
 
+// representa el rol de guerrero
+//hereda de roll pero sobreescribe las habilidades del guerrero
+
 public class Guerrero extends Roll {
-	
-	//String nombre, int vidaMax, int ataqueBase, int defensa, int manaMax
-	public Guerrero(String nombre)
-	{
-		super(nombre, 150, 20, 50, 70); 
-	}
+
+    public Guerrero(String nombre) {
+        super(nombre, 150, 20, 50, 70);
+    }
 
     @Override
-    public void habilidadNormal()
-	{
-    	System.out.println(nombre + " Dashea hacia el frente");
-	}
+    public void habilidadNormal() {
+        System.out.println(nombre + " realiza un dash golpeando al enemigo.");
+        setMana(getMana() - 10);
+    }
 
     @Override
-    public void habilidadEspecial() 
-	{
-    	int danio = ataqueBase * 2;
-    	System.out.println(nombre + " El guerrero entra en un estado de Berserk y ataque dos veces a: " + nombre);
-    	//objetivo.recibirAtaque(danio);
-    	System.out.println("-" + danio);
-	}
+    public void habilidadEspecial() {
+        System.out.println(nombre + " entra en Berserk aumentando enormemente su daño.");
+        setMana(getMana() - 20);
+    }
 }

@@ -2,6 +2,9 @@ package juego;
 
 import java.util.ArrayList;
 
+// main para ejecutar el programa
+// se muestra el menu, se crean los personajes, los bots y se lanza la ventana grafica
+
 public class Main {
 
     public static void main(String[] args) {
@@ -14,6 +17,7 @@ public class Main {
             System.out.println("Saliendo del juego...");
             return;
         }
+        
         // datos del jugador 
         String nombre = Menu.pedirNombre();
         String claseElegida = Menu.elegirClase();
@@ -47,11 +51,12 @@ public class Main {
                 claseElegida.equals("Guerrero") ? new Espada() :
                 claseElegida.equals("Arquero") ? new Arco() :
                 new Baculo();
-
+        
+        // crear el pbjeto jugador
         Jugador jugadorPrincipal = new Jugador(nombre, personajeHumano, armaHumano, true);
         jugadores.add(jugadorPrincipal);
 
-        // crear el resto de humanos (guerreros)
+        // crear el resto de humanos (solo guerreros)
         for (int i = 1; i < numHumanos; i++) {
             Roll pj = new Guerrero("Humano" + (i + 1));
             Jugador humanoExtra = new Jugador("Humano" + (i + 1), pj, new Espada(), true);
@@ -94,15 +99,6 @@ public class Main {
         // abrir interfaz grafica
         System.out.println("Abriendo VentanaJuego...");
         new VentanaJuego(mapa, jugadorPrincipal, partida);
-        
-        try {
-            String[] config = GestorFicheros.leerConfig("C:/Users/pilar/git/BattleRoyale/src/juego/config.txt");
-            System.out.println("ConfiguraciOn cargada:");
-            for (String c : config) System.out.println(c);
-        } catch (FicheroLecturaExcepcion e) {
-            System.out.println("No se ha podido leer configuracion: " + e.getMessage());
-        }
-
     }
 }
 

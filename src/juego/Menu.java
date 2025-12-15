@@ -2,8 +2,12 @@ package juego;
 
 import java.util.Scanner;
 
-public class Menu {
+// menu de la partida, se ejecuta al inicio
+// se encarga de pedir al jugador si quiere jugar o salir, su nombre, la clase de personaje, el numero de jugadores humanos, de bots, y la dificultad
 
+public class Menu {
+	
+	// leer texto y numeros que introduce el usuario
     private static Scanner sc = new Scanner(System.in);
 
     // menu principal

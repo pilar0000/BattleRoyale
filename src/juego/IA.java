@@ -3,16 +3,21 @@ package juego;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class IA {
+// ia de los bots segun la dificultad
 
+public class IA {
+	
+	// generar numeros aleatorios
     private static Random rnd = new Random();
 
-    // ia facil: aleatoria
+    // ia facil: el bot elige un objetivo aleatorio
+    
     public static Jugador objetivoFacil(Partida partida, Jugador bot) {
         ArrayList<Jugador> lista = partida.getJugadores();
 
         ArrayList<Jugador> vivos = new ArrayList<>();
-
+        
+        // recorrer la lista de jugadores, el bot no se puede atacar a si mismo
         for (Jugador j : lista) {
             if (j != bot && j.estaVivo()) {
                 vivos.add(j);
@@ -20,13 +25,15 @@ public class IA {
         }
 
         if (vivos.isEmpty()) return null;
-
+        
+        // elegir un enemigo aleatorio
         return vivos.get(rnd.nextInt(vivos.size()));
     }
 
-    // ia normal: jugador mas cercano
+    // ia normal: busca el jugador mas cercano
     public static Jugador objetivoNormal(Partida partida, Jugador bot) {
-
+    	
+    	// empezamos con la distancia mas grande posible
         Jugador objetivo = null;
         double mejorDist = Double.MAX_VALUE;
 
@@ -44,7 +51,7 @@ public class IA {
         return objetivo;
     }
 
-    // ia dificil: prioriza debilitar
+    // ia dificil: busca el jugador con menos vida y mas cercano
     public static Jugador objetivoDificil(Partida partida, Jugador bot) {
 
         Jugador mejor = null;
@@ -71,7 +78,7 @@ public class IA {
         return mejor;
     }
 
-    // distancia
+    // distancia entre dos posiciones del mapa
     private static double distancia(Posicion p1, Posicion p2) {
 
         int dx = p1.getX() - p2.getX();
@@ -93,5 +100,4 @@ public class IA {
             bot.setPos(nueva);
         }
     }
-
 }

@@ -3,11 +3,14 @@ package juego;
 import java.io.*;
 import java.util.ArrayList;
 
+// esta clase hace de administrador de los archivos del juego
+// se utiliza para guardar el log de la partida y para leer los archivos de configuracion
+
 public class GestorFicheros {
 
-    // guardar log de la partida
+    // guardar log de la partida con las lineas almacenadas en Logger
     public static void guardarLog(String ruta, Logger logger) throws FicheroEscrituraExcepcion {
-
+    	
         try (PrintWriter pw = new PrintWriter(new FileWriter(ruta))) {
 
             for (String linea : logger.getLog()) {
