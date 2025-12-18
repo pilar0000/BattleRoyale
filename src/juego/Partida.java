@@ -29,6 +29,7 @@ public class Partida {
     public ArrayList<Jugador> getJugadores() {
         return jugadores;
     }
+    
 
     // inicializar partida
     public void inicializar() {
@@ -261,7 +262,7 @@ public class Partida {
             System.out.println("No hubo ganador.");
         }
         try {
-            GestorFicheros.guardarLog("C:/Users/pilar/git/BattleRoyale/src/juego/log_partida.txt", logger);
+            GestorFicheros.guardarLog("log_partida.txt", logger);
             System.out.println("Log guardado correctamente.");
         } catch (FicheroEscrituraExcepcion e) {
             System.out.println(e.getMessage());

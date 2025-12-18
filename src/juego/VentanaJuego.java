@@ -182,23 +182,22 @@ class PanelMapa extends JPanel {
     // constructor
     public PanelMapa(Mapa mapa) {
         this.mapa = mapa;
+        
+        // CAMBIO DE RUTA
+        tilePasto = new ImageIcon(getClass().getResource("/juego/Sprites/Pasto1.png")).getImage();
+        tilePiedra = new ImageIcon(getClass().getResource("/juego/Sprites/Pasto2.png")).getImage();
 
-        String ruta = "C:/Users/pilar/git/BattleRoyale/src/juego/Sprites/";
+        spritePocionVida = new ImageIcon(getClass().getResource("/juego/Sprites/PocionVida.png")).getImage();
+        spritePocionMana = new ImageIcon(getClass().getResource("/juego/Sprites/PocionMana.png")).getImage();
 
-        tilePasto = new ImageIcon(ruta + "Pasto1.png").getImage();
-        tilePiedra = new ImageIcon(ruta + "Pasto2.png").getImage();
+        spriteGuerreroDer = new ImageIcon(getClass().getResource("/juego/Sprites/Guerr_der.png")).getImage();
+        spriteGuerreroIzq = new ImageIcon(getClass().getResource("/juego/Sprites/Guerr_izq.png")).getImage();
 
-        spritePocionVida = new ImageIcon(ruta + "PocionVida.png").getImage();
-        spritePocionMana = new ImageIcon(ruta + "PocionMana.png").getImage();
+        spriteArqueroDer = new ImageIcon(getClass().getResource("/juego/Sprites/Arq_der.png")).getImage();
+        spriteArqueroIzq = new ImageIcon(getClass().getResource("/juego/Sprites/Arq_izq.png")).getImage();
 
-        spriteGuerreroDer = new ImageIcon(ruta + "Guerr_der.png").getImage();
-        spriteGuerreroIzq = new ImageIcon(ruta + "Guerr_izq.png").getImage();
-
-        spriteArqueroDer = new ImageIcon(ruta + "Arq_der.png").getImage();
-        spriteArqueroIzq = new ImageIcon(ruta + "Arq_izq.png").getImage();
-
-        spriteMagoDer = new ImageIcon(ruta + "Mago_der.png").getImage();
-        spriteMagoIzq = new ImageIcon(ruta + "Mago_izq.png").getImage();
+        spriteMagoDer = new ImageIcon(getClass().getResource("/juego/Sprites/Mago_der.png")).getImage();
+        spriteMagoIzq = new ImageIcon(getClass().getResource("/juego/Sprites/Mago_izq.png")).getImage();
 
         spriteJugadorActual = spriteMagoDer;
         
@@ -455,7 +454,7 @@ class PanelHUD extends JPanel {
         btnHab2.setEnabled(false);
     }
 
-    // cada vez que algo camba¡ia, el hud se actualiza
+    // cada vez que algo cambia, el hud se actualiza
     public void actualizar() {
         lblNombre.setText("Jugador: " + jugadorPrincipal.getNombre());
         lblVida.setText("Vida: " + jugadorPrincipal.getVida());
